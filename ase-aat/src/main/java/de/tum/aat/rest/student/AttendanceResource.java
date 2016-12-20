@@ -1,31 +1,37 @@
 package de.tum.aat.rest.student;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import org.restlet.data.MediaType;
-import org.restlet.representation.ObjectRepresentation;
+import org.restlet.representation.ByteArrayRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.resource.Get;
+import org.restlet.resource.ServerResource;
 
-import de.tum.aat.domain.Student;
+import de.tum.aat.logic.QRGenerator;
+import net.glxn.qrgen.QRCode;
+import net.glxn.qrgen.image.ImageType;
 
-public class AttendanceResource {
+public class AttendanceResource extends ServerResource {
 
-	@Get("image/jpeg")
-	public Representation getAttendanceQR(Student s) {
-		
-		byte[] data = null;
+	private static final QRGenerator QR = new QRGenerator();
 
-		ObjectRepresentation<byte[]> or = new ObjectRepresentation<byte[]>(data, MediaType.IMAGE_PNG) {
-			@Override
-			public void write(OutputStream os) throws IOException {
-				super.write(os);
-				os.write(this.getObject());
-			}
-		};
+	@Get("image/png")
+	public Representation getAttendanceQR() {
 
-		return or;
+		long id = Long.MIN_VALUE;
+
+		try {
+			id = Long.parseLong(getAttribute("id"));
+
+		} catch (Exception e) {
+			// TODO: create NoIdProvidedException
+		}
+
+		byte[] data = QRCode.from(QR.generateAttendance(id)).to(ImageType.PNG).stream().toByteArray();
+
+		ByteArrayRepresentation bar = new ByteArrayRepresentation(data, MediaType.IMAGE_PNG);
+		getResponse().setEntity(bar);
+
+		return bar;
 	}
 
 }

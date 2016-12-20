@@ -6,6 +6,8 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Serialize;
 
+import de.tum.aat.constants.Constants;
+
 @Entity
 public class ExerciseGroup {
 
@@ -63,6 +65,17 @@ public class ExerciseGroup {
 	public String toString() {
 		return "ExerciseGroup [id=" + id + ", name=" + name + ", timeslots=" + timeslots + ", students="
 				+ students.size() + ", teachingAssistant=" + teachingAssistant + "]";
+	}
+
+	public ExerciseTimeslot getCurrentTimeslot() {
+		long currentTime = System.currentTimeMillis();
+		for (ExerciseTimeslot ts : timeslots) {
+			if (currentTime >= (ts.getStart().getTime() - Constants.TIMESLOT_OFFSET)
+					&& currentTime <= ts.getEnd().getTime()) {
+				return ts;
+			}
+		}
+		return null;
 	}
 
 }

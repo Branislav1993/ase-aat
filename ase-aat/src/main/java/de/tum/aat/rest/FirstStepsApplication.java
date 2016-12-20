@@ -5,6 +5,7 @@ import org.restlet.Restlet;
 import org.restlet.routing.Router;
 
 import de.tum.aat.rest.groups.ExerciseGroupResource;
+import de.tum.aat.rest.student.AttendanceResource;
 import de.tum.aat.rest.student.GetStudentResource;
 import de.tum.aat.rest.student.StudentResource;
 
@@ -32,6 +33,8 @@ public class FirstStepsApplication extends Application {
 		router.attach("/groups/", ExerciseGroupResource.class);
 		// teaching assistant resources
 		router.attach("/assistants/", TeachingAssistantResource.class);
+		
+		router.attach("/qrattendance/{id}", AttendanceResource.class);
 
 		return router;
 	}
