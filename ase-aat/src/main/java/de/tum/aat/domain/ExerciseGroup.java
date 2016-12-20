@@ -67,12 +67,14 @@ public class ExerciseGroup {
 				+ students.size() + ", teachingAssistant=" + teachingAssistant + "]";
 	}
 
-	public ExerciseTimeslot getCurrentTimeslot() {
+	public ExerciseTimeslot currentTimeslot() {
 		long currentTime = System.currentTimeMillis();
-		for (ExerciseTimeslot ts : timeslots) {
-			if (currentTime >= (ts.getStart().getTime() - Constants.TIMESLOT_OFFSET)
-					&& currentTime <= ts.getEnd().getTime()) {
-				return ts;
+		if (timeslots != null) {
+			for (ExerciseTimeslot ts : timeslots) {
+				if (currentTime >= (ts.getStart().getTime() - Constants.TIMESLOT_OFFSET)
+						&& currentTime <= ts.getEnd().getTime()) {
+					return ts;
+				}
 			}
 		}
 		return null;

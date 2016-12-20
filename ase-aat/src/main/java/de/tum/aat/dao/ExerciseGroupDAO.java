@@ -7,12 +7,29 @@ import java.util.List;
 import com.googlecode.objectify.Key;
 
 import de.tum.aat.domain.ExerciseGroup;
+import de.tum.aat.exceptions.NotFoundException;
 
 public class ExerciseGroupDAO {
 
+	public ExerciseGroup getExerciseGroup(Key<ExerciseGroup> key) {
+		ExerciseGroup s = ofy().load().key(key).now();
+
+		if (s == null) {
+			throw new NotFoundException(ExerciseGroup.class);
+		}
+
+		return s;
+	}
+
 	public ExerciseGroup getExerciseGroup(long id) {
 		Key<ExerciseGroup> key = Key.create(ExerciseGroup.class, id);
-		return ofy().load().key(key).now();
+		ExerciseGroup s = ofy().load().key(key).now();
+
+		if (s == null) {
+			throw new NotFoundException(ExerciseGroup.class);
+		}
+
+		return s;
 	}
 
 	public List<ExerciseGroup> getExerciseGroups() {
@@ -26,17 +43,24 @@ public class ExerciseGroupDAO {
 
 	public void deleteExerciseGroup(long id) {
 		Key<ExerciseGroup> key = Key.create(ExerciseGroup.class, id);
+		ExerciseGroup s = ofy().load().key(key).now();
+
+		if (s == null) {
+			throw new NotFoundException(ExerciseGroup.class);
+		}
+
 		ofy().delete().key(key).now();
 	}
 
 	public ExerciseGroup updateExerciseGroup(ExerciseGroup s) {
 		ExerciseGroup oldExerciseGroup = getExerciseGroup(s.getId());
+
+		if (oldExerciseGroup == null) {
+			throw new NotFoundException(ExerciseGroup.class);
+		}
+
 		oldExerciseGroup = s;
 		return saveExerciseGroup(oldExerciseGroup);
-	}
-
-	public ExerciseGroup getExerciseGroup(Key<ExerciseGroup> key) {
-		return ofy().load().key(key).now();
 	}
 
 }

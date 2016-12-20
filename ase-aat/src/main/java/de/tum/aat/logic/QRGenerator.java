@@ -21,7 +21,7 @@ public class QRGenerator {
 
 		Student s = ss.getStudent(id);
 		ExerciseGroup eg = gs.getExerciseGroup(s.getExerciseGroup());
-		ExerciseTimeslot currentTimeslot = eg.getCurrentTimeslot();
+		ExerciseTimeslot currentTimeslot = eg.currentTimeslot();
 
 		if (currentTimeslot == null) {
 			// TODO: create NoCurrentExerciseSessionException

@@ -7,12 +7,19 @@ import java.util.List;
 import com.googlecode.objectify.Key;
 
 import de.tum.aat.domain.Student;
+import de.tum.aat.exceptions.NotFoundException;
 
 public class StudentDAO {
 
 	public Student getStudent(long id) {
 		Key<Student> key = Key.create(Student.class, id);
-		return ofy().load().key(key).now();
+		Student s = ofy().load().key(key).now();
+
+		if (s == null) {
+			throw new NotFoundException(Student.class);
+		}
+
+		return s;
 	}
 
 	public List<Student> getStudents() {
@@ -26,11 +33,22 @@ public class StudentDAO {
 
 	public void deleteStudent(long id) {
 		Key<Student> key = Key.create(Student.class, id);
+		Student s = ofy().load().key(key).now();
+
+		if (s == null) {
+			throw new NotFoundException(Student.class);
+		}
+
 		ofy().delete().key(key).now();
 	}
 
 	public Student updateStudent(Student s) {
 		Student oldStudent = getStudent(s.getId());
+
+		if (oldStudent == null) {
+			throw new NotFoundException(Student.class);
+		}
+
 		oldStudent = s;
 		return saveStudent(oldStudent);
 	}

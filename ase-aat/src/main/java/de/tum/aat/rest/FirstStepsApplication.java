@@ -4,9 +4,12 @@ import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.routing.Router;
 
-import de.tum.aat.rest.groups.ExerciseGroupResource;
+import de.tum.aat.rest.assistant.TeachingAssistantIdSpecificResource;
+import de.tum.aat.rest.assistant.TeachingAssistantResource;
+import de.tum.aat.rest.group.ExerciseGroupIdSpecificResource;
+import de.tum.aat.rest.group.ExerciseGroupResource;
 import de.tum.aat.rest.student.AttendanceResource;
-import de.tum.aat.rest.student.GetStudentResource;
+import de.tum.aat.rest.student.StudentIdSpecificResource;
 import de.tum.aat.rest.student.StudentResource;
 
 public class FirstStepsApplication extends Application {
@@ -28,12 +31,14 @@ public class FirstStepsApplication extends Application {
 		router.attach("/guestbook/{greeting}", GreetingResource.class);
 		// student resources
 		router.attach("/students/", StudentResource.class);
-		router.attach("/students/{id}", GetStudentResource.class);
+		router.attach("/students/{id}", StudentIdSpecificResource.class);
 		// exercise group resources
 		router.attach("/groups/", ExerciseGroupResource.class);
+		router.attach("/groups/{id}", ExerciseGroupIdSpecificResource.class);
 		// teaching assistant resources
 		router.attach("/assistants/", TeachingAssistantResource.class);
-		
+		router.attach("/assistants/{id}", TeachingAssistantIdSpecificResource.class);
+		// attendance registration resource
 		router.attach("/qrattendance/{id}", AttendanceResource.class);
 
 		return router;
