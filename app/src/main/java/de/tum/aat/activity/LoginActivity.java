@@ -1,4 +1,4 @@
-package de.tum.aat;
+package de.tum.aat.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -32,6 +32,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.tum.aat.R;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -347,6 +349,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
                 Intent intent = new Intent(LoginActivity.this, ExerciseListActivity.class);
+                finish();
                 startActivity(intent);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
