@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 
 import de.tum.aat.R;
 import de.tum.aat.model.Exercise;
+import de.tum.aat.utils.Utils;
 
 //import com.android.volley.Request;
 //import com.android.volley.RequestQueue;
@@ -28,7 +29,6 @@ import de.tum.aat.model.Exercise;
 
 public class ExerciseListActivity extends AppCompatActivity {
 
-//    private static final String ORDERS = "http://10.0.2.2/netbeans/ep/php/api/narocilo/%s";
     private static final String TAG = ExerciseListActivity.class.getCanonicalName();
 
     @Override
@@ -77,18 +77,14 @@ public class ExerciseListActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
+        int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-//        if (id == R.id.odjava) {
-//            Utils.odjava(this);
-//        }
+        if (id == R.id.action_sign_out) {
+            Utils.signOut(this);
+        }
 
         return super.onOptionsItemSelected(item);
     }
 
-//    @Override
-//    protected void onListItemClick(ListView l, View v, int position, long id) {
-
-//    }
 }

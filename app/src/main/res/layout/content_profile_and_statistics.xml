@@ -9,17 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activity.ExerciseDetailsActivity"
-    tools:showIn="@layout/activity_exercise_details">
-
-    <Button
-        android:id="@+id/presence_qr_button"
-        style="?android:textAppearanceButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_weight="1"
-        android:text="@string/action_register_for_group"
-        android:textStyle="bold" />
+    tools:context="de.tum.aat.activity.ProfileAndStatisticsActivity"
+    tools:showIn="@layout/activity_profile_and_statistics">
 
 </RelativeLayout>

@@ -1,18 +1,26 @@
 <resources>
     <string name="app_name">AAT</string>
     <string name="action_settings">Settings</string>
+    <string name="action_close">CLOSE</string>
     <string name="title_activity_login">Sign in</string>
     <string name="not_registered_yet">"Haven't registered yet? Please register by clicking the button below."</string>
     <string name="title_activity_register">Register</string>
     <string name="title_activity_exercise_list">List of exercises</string>
     <string name="title_activity_exercise_details">Exercise details</string>
+    <string name="title_activity_choice">Advanced topics of SE</string>
+    <string name="display_presence_qr">Display presence QR code</string>
+    <string name="display_presentation_qr">Display presentation QR code</string>
+    <string name="exercise_groups">Exercise groups</string>
+    <string name="user_profile_and_statistics">User profile and statistics</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
+    <string name="action_sign_out">Sign out</string>
     <string name="action_register">Register</string>
+    <string name="action_register_for_group">Register for group</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
@@ -20,5 +28,9 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="title_activity_profile_and_statistics">Profile and statistics</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
