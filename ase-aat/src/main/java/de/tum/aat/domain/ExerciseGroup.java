@@ -1,5 +1,6 @@
 package de.tum.aat.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.googlecode.objectify.annotation.Entity;
@@ -15,11 +16,11 @@ public class ExerciseGroup {
 	private long id;
 	private String name;
 	@Serialize
-	private List<ExerciseTimeslot> timeslots;
+	private ArrayList<ExerciseTimeslot> timeslots;
 	@Serialize
-	private List<Student> students;
+	private ArrayList<Student> students;
 	@Serialize
-	private List<TeachingAssistant> teachingAssistant;
+	private ArrayList<TeachingAssistant> teachingAssistant;
 
 	public long getId() {
 		return id;
@@ -41,7 +42,7 @@ public class ExerciseGroup {
 		return timeslots;
 	}
 
-	public void setTimeslots(List<ExerciseTimeslot> timeslots) {
+	public void setTimeslots(ArrayList<ExerciseTimeslot> timeslots) {
 		this.timeslots = timeslots;
 	}
 
@@ -49,7 +50,7 @@ public class ExerciseGroup {
 		return students;
 	}
 
-	public void setStudents(List<Student> students) {
+	public void setStudents(ArrayList<Student> students) {
 		this.students = students;
 	}
 
@@ -57,7 +58,7 @@ public class ExerciseGroup {
 		return teachingAssistant;
 	}
 
-	public void setTeachingAssistant(List<TeachingAssistant> teachingAssistant) {
+	public void setTeachingAssistant(ArrayList<TeachingAssistant> teachingAssistant) {
 		this.teachingAssistant = teachingAssistant;
 	}
 

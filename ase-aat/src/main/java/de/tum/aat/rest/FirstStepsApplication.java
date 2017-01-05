@@ -9,6 +9,10 @@ import de.tum.aat.rest.assistant.TeachingAssistantResource;
 import de.tum.aat.rest.group.ExerciseGroupIdSpecificResource;
 import de.tum.aat.rest.group.ExerciseGroupResource;
 import de.tum.aat.rest.student.AttendanceResource;
+import de.tum.aat.rest.student.PresentationResource;
+import de.tum.aat.rest.student.RegisterAttendanceResource;
+import de.tum.aat.rest.student.RegisterPresentationResource;
+import de.tum.aat.rest.student.StudentExerciseRegistrationResource;
 import de.tum.aat.rest.student.StudentIdSpecificResource;
 import de.tum.aat.rest.student.StudentResource;
 
@@ -19,12 +23,7 @@ public class FirstStepsApplication extends Application {
 	 */
 	@Override
 	public Restlet createInboundRoot() {
-		// Create a router Restlet that routes each call to a
-		// new instance of HelloWorldResource.
 		Router router = new Router(getContext());
-
-		// Defines only one route
-		// router.attachDefault(HelloWorldResource.class);
 
 		router.attach("/", HelloWorldResource.class);
 		router.attach("/guestbook/", GuestbookResource.class);
@@ -40,6 +39,14 @@ public class FirstStepsApplication extends Application {
 		router.attach("/assistants/{id}", TeachingAssistantIdSpecificResource.class);
 		// attendance registration resource
 		router.attach("/qrattendance/{id}", AttendanceResource.class);
+		// presentation registration resource
+		router.attach("/qrpresentation/{id}", PresentationResource.class);
+		// group registration resource
+		router.attach("/groupregister?groupId={groupId}&studentId={studentId}",
+				StudentExerciseRegistrationResource.class);
+
+		router.attach("/attendance?id={id}&start={start}&end={end}", RegisterAttendanceResource.class);
+		router.attach("/presentation?id={id}&start={start}&end={end}", RegisterPresentationResource.class);
 
 		return router;
 	}

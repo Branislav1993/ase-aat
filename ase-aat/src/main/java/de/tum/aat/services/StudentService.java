@@ -16,4 +16,10 @@ public interface StudentService {
 
 	public void deleteStudent(long id);
 
+	public Student registerExerciseGroupForStudent(long groupId, long studentId);
+
+	public Student registerAttendance(long studentId, long start, long end);
+
+	Student registerPresentation(long studentId, long start, long end);
+	
 }

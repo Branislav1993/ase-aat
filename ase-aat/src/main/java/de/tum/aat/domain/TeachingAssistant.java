@@ -1,5 +1,6 @@
 package de.tum.aat.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.googlecode.objectify.annotation.Entity;
@@ -7,7 +8,9 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Serialize;
 
 @Entity
-public class TeachingAssistant {
+public class TeachingAssistant implements Serializable {
+
+	private static final long serialVersionUID = 1571892595861671294L;
 
 	@Id
 	private long id;

@@ -1,14 +1,26 @@
 package de.tum.aat.domain;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ExerciseTimeslot {
+public class ExerciseTimeslot implements Serializable {
+
+	private static final long serialVersionUID = -4258752755633898996L;
 
 	private static final SimpleDateFormat TIMESLOT_FORMAT = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 
 	private Date start;
 	private Date end;
+
+	public ExerciseTimeslot(long start, long end) {
+		this.start = new Date(start);
+		this.end = new Date(end);
+	}
+
+	public ExerciseTimeslot() {
+
+	}
 
 	public Date getStart() {
 		return start;

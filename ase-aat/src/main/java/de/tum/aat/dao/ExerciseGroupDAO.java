@@ -7,6 +7,8 @@ import java.util.List;
 import com.googlecode.objectify.Key;
 
 import de.tum.aat.domain.ExerciseGroup;
+import de.tum.aat.domain.Student;
+import de.tum.aat.exceptions.GenericException;
 import de.tum.aat.exceptions.NotFoundException;
 
 public class ExerciseGroupDAO {
@@ -47,6 +49,13 @@ public class ExerciseGroupDAO {
 
 		if (s == null) {
 			throw new NotFoundException(ExerciseGroup.class);
+		}
+		
+		if (!s.getStudents().isEmpty()) {
+			for (Student student : s.getStudents()) {
+				student.setExerciseGroup(null);
+			}
+			throw new GenericException("");
 		}
 
 		ofy().delete().key(key).now();

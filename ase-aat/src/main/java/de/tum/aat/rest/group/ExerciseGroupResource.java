@@ -24,7 +24,7 @@ public class ExerciseGroupResource extends ServerResource {
 		return egs.getExerciseGroups();
 	}
 
-	@Post
+	@Post("json")
 	public ExerciseGroup saveExerciseGroup(ExerciseGroup s) {
 		return egs.saveExerciseGroup(s);
 	}

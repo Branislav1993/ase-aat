@@ -1,5 +1,6 @@
 package de.tum.aat.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.googlecode.objectify.Key;
@@ -8,12 +9,15 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Serialize;
 
 @Entity
-public class Student {
+public class Student implements Serializable {
+
+	private static final long serialVersionUID = 832302302449469371L;
 
 	@Id
 	private long id;
 	private String name;
 	private String lastName;
+	private String email;
 	private Key<ExerciseGroup> exerciseGroup;
 	@Serialize
 	private List<ExerciseTimeslot> timeslotsAttended;
@@ -42,6 +46,14 @@ public class Student {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public Key<ExerciseGroup> getExerciseGroup() {
