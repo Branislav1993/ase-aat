@@ -10,11 +10,13 @@ public class NoIdException extends RuntimeException {
 	public NoIdException(Class<?> c) {
 		super(generateMessage(c));
 	}
-	
+
 	private static String generateMessage(Class<?> c) {
 		String message = "";
 
-		String className = c.getName();
+		String[] fullName = c.getName().split(".");
+
+		String className = fullName[fullName.length - 1];
 
 		switch (className) {
 		case "Student":
@@ -29,7 +31,7 @@ public class NoIdException extends RuntimeException {
 		default:
 			message = "Not found, provide proper ID!";
 		}
-		
+
 		return message;
 	}
 

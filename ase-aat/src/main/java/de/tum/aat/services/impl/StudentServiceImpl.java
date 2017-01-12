@@ -28,7 +28,8 @@ public class StudentServiceImpl implements StudentService {
 			throw new NotFoundException(Student.class);
 		}
 
-		s.setId(new Random().nextLong());
+		Random r = new Random();
+		s.setId(r.nextInt(Integer.MAX_VALUE));
 
 		if (s.getEmail() == null || !s.getEmail().contains("@tum.de")
 				|| !(s.getEmail().indexOf('.') > 0 && s.getEmail().indexOf('.') < s.getEmail().indexOf('@'))) {
@@ -36,9 +37,12 @@ public class StudentServiceImpl implements StudentService {
 		}
 
 		List<Student> all = sd.getStudents();
-		for (Student student : all) {
-			if (student.getEmail().equals(s.getEmail()))
-				throw new GenericException("Already registered with the same address!");
+
+		if (all == null || !all.isEmpty()) {
+			for (Student student : all) {
+				if (student.getEmail().equals(s.getEmail()))
+					throw new GenericException("Already registered with the same address!");
+			}
 		}
 
 		s.setName(s.getEmail().substring(0, s.getEmail().indexOf('.')));

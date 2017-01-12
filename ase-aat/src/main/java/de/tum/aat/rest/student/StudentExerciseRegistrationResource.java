@@ -22,8 +22,8 @@ public class StudentExerciseRegistrationResource extends ServerResource {
 		long groupId = Long.MIN_VALUE;
 		long studentId = Long.MIN_VALUE;
 		try {
-			groupId = Long.parseLong(getAttribute("groupId"));
-			studentId = Long.parseLong(getAttribute("studentId"));
+			groupId = Long.parseLong(getQueryValue("groupId"));
+			studentId = Long.parseLong(getQueryValue("studentId"));
 		} catch (Exception e) {
 			throw new NoIdException(Student.class);
 		}

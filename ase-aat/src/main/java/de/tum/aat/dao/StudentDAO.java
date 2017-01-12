@@ -2,6 +2,7 @@ package de.tum.aat.dao;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.googlecode.objectify.Key;
@@ -42,7 +43,7 @@ public class StudentDAO {
 		}
 
 		if (s.getExerciseGroup() != null) {
-			throw new GenericException("Student is enrolled in the " + s.getExerciseGroup().getName()
+			throw new GenericException("Student is enrolled in the " + s.getExerciseGroup()
 					+ ". You can't delete registered student.");
 		}
 
@@ -75,10 +76,16 @@ public class StudentDAO {
 			throw new NotFoundException(ExerciseGroup.class);
 		}
 
-		s.setExerciseGroup(groupKey);
+		s.setExerciseGroup(g.getId());
 
-		g.getStudents().add(s);
-
+		if (g.getStudents() == null || g.getStudents().isEmpty()) {
+			ArrayList<Student> students = new ArrayList<>();
+			students.add(s);
+			g.setStudents(students);
+		} else {
+			g.getStudents().add(s);
+		}
+		
 		ofy().save().entity(g).now();
 
 		return saveStudent(s);

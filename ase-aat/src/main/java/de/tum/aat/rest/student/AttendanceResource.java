@@ -16,8 +16,8 @@ public class AttendanceResource extends ServerResource {
 
 	private static final QRGenerator QR = new QRGenerator();
 
-	@Get("image/png")
-	public Representation getAttendanceQR() {
+	@Get("plain/text")
+	public String getAttendanceQR() {
 
 		long id = Long.MIN_VALUE;
 
@@ -27,12 +27,14 @@ public class AttendanceResource extends ServerResource {
 			throw new NotFoundException(Student.class);
 		}
 
-		byte[] data = QRCode.from(QR.generateAttendance(id)).to(ImageType.PNG).stream().toByteArray();
-
-		ByteArrayRepresentation bar = new ByteArrayRepresentation(data, MediaType.IMAGE_PNG);
-		getResponse().setEntity(bar);
-
-		return bar;
+//		byte[] data = QRCode.from(QR.generateAttendance(id)).to(ImageType.PNG).stream().toByteArray();
+//
+//		ByteArrayRepresentation bar = new ByteArrayRepresentation(data, MediaType.IMAGE_PNG);
+//		getResponse().setEntity(bar);
+//
+//		return bar;
+		
+		return QR.generateAttendance(id);
 	}
 
 }

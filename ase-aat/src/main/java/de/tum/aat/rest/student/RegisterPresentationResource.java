@@ -22,9 +22,9 @@ public class RegisterPresentationResource extends ServerResource {
 		long start = Long.MIN_VALUE;
 		long end = Long.MAX_VALUE;
 		try {
-			studentId = Long.parseLong(getAttribute("id"));
-			start = Long.parseLong(getAttribute("start"));
-			end = Long.parseLong(getAttribute("end"));
+			studentId = Long.parseLong(getQueryValue("id"));
+			start = Long.parseLong(getQueryValue("start"));
+			end = Long.parseLong(getQueryValue("end"));
 		} catch (Exception e) {
 			throw new NoIdException(Student.class);
 		}

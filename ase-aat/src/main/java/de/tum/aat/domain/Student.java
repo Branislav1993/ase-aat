@@ -3,7 +3,6 @@ package de.tum.aat.domain;
 import java.io.Serializable;
 import java.util.List;
 
-import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Serialize;
@@ -18,7 +17,7 @@ public class Student implements Serializable {
 	private String name;
 	private String lastName;
 	private String email;
-	private Key<ExerciseGroup> exerciseGroup;
+	private Long exerciseGroupId;
 	@Serialize
 	private List<ExerciseTimeslot> timeslotsAttended;
 	private int numberOfPresentations;
@@ -56,12 +55,12 @@ public class Student implements Serializable {
 		this.email = email;
 	}
 
-	public Key<ExerciseGroup> getExerciseGroup() {
-		return exerciseGroup;
+	public Long getExerciseGroup() {
+		return exerciseGroupId;
 	}
 
-	public void setExerciseGroup(Key<ExerciseGroup> exerciseGroup) {
-		this.exerciseGroup = exerciseGroup;
+	public void setExerciseGroup(Long exerciseGroupId) {
+		this.exerciseGroupId = exerciseGroupId;
 	}
 
 	public List<ExerciseTimeslot> getTimeslotsAttended() {
@@ -90,7 +89,7 @@ public class Student implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Student [id=" + id + ", name=" + name + ", lastName=" + lastName + ", exerciseGroup=" + exerciseGroup
+		return "Student [id=" + id + ", name=" + name + ", lastName=" + lastName + ", exerciseGroup=" + exerciseGroupId
 				+ ", timeslotsAttended=" + timeslotsAttended + ", numberOfPresentations=" + numberOfPresentations
 				+ ", hasBonus=" + hasBonus + "]";
 	}

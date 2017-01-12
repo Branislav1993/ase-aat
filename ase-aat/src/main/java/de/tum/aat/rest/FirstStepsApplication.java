@@ -42,11 +42,10 @@ public class FirstStepsApplication extends Application {
 		// presentation registration resource
 		router.attach("/qrpresentation/{id}", PresentationResource.class);
 		// group registration resource
-		router.attach("/groupregister?groupId={groupId}&studentId={studentId}",
-				StudentExerciseRegistrationResource.class);
+		router.attach("/groupregister", StudentExerciseRegistrationResource.class);
 
-		router.attach("/attendance?id={id}&start={start}&end={end}", RegisterAttendanceResource.class);
-		router.attach("/presentation?id={id}&start={start}&end={end}", RegisterPresentationResource.class);
+		router.attach("/attendance", RegisterAttendanceResource.class);
+		router.attach("/presentation", RegisterPresentationResource.class);
 
 		return router;
 	}
