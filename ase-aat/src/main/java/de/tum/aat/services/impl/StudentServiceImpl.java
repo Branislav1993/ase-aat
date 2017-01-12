@@ -49,9 +49,17 @@ public class StudentServiceImpl implements StudentService {
 					throw new GenericException("Already registered with the same address!");
 			}
 		}
+		
+		//Extracting name and last name from email
+		String name = s.getEmail().substring(0, s.getEmail().indexOf('.'));
+		String lastName = s.getEmail().substring(s.getEmail().indexOf('.') + 1, s.getEmail().indexOf('@'));
+		
+		//Capitalizing name and last name
+		name = name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
+		lastName = lastName.substring(0,1).toUpperCase() + lastName.substring(1).toLowerCase();
 
-		s.setName(s.getEmail().substring(0, s.getEmail().indexOf('.')));
-		s.setLastName(s.getEmail().substring(s.getEmail().indexOf('.') + 1, s.getEmail().indexOf('@')));
+		s.setName(name);
+		s.setLastName(lastName);
 
 		return sd.saveStudent(s);
 	}
