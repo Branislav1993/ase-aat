@@ -6,7 +6,8 @@ import org.restlet.resource.ServerResource;
 
 import de.tum.aat.domain.Student;
 import de.tum.aat.exceptions.NoIdException;
-import de.tum.aat.exceptions.NotFoundException;
+import de.tum.aat.exceptions.NotAuthorizedException;
+import de.tum.aat.rest.RestApp;
 import de.tum.aat.services.StudentService;
 import de.tum.aat.services.impl.StudentServiceImpl;
 
@@ -20,6 +21,11 @@ public class StudentIdSpecificResource extends ServerResource {
 
 	@Get("json")
 	public Student getStudent() {
+		
+		if (!RestApp.getInstance().authenticate(getRequest(), getResponse())) {
+			throw new NotAuthorizedException();
+		}
+		
 		long id = Long.MIN_VALUE;
 		try {
 			id = Long.parseLong(getAttribute("id"));
@@ -30,7 +36,7 @@ public class StudentIdSpecificResource extends ServerResource {
 	}
 
 	@Delete
-	public void deleteStudent() throws NotFoundException {
+	public void deleteStudent() {
 		long id = Long.MIN_VALUE;
 		try {
 			id = Long.parseLong(getAttribute("id"));

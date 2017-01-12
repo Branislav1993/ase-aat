@@ -17,6 +17,7 @@ public class Student implements Serializable {
 	private String name;
 	private String lastName;
 	private String email;
+	private String password;
 	private Long exerciseGroupId;
 	@Serialize
 	private List<ExerciseTimeslot> timeslotsAttended;
@@ -53,6 +54,14 @@ public class Student implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public Long getExerciseGroup() {

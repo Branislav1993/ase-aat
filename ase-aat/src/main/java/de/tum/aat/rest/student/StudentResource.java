@@ -8,6 +8,8 @@ import org.restlet.resource.Put;
 import org.restlet.resource.ServerResource;
 
 import de.tum.aat.domain.Student;
+import de.tum.aat.exceptions.NotAuthorizedException;
+import de.tum.aat.rest.RestApp;
 import de.tum.aat.services.StudentService;
 import de.tum.aat.services.impl.StudentServiceImpl;
 
@@ -31,6 +33,11 @@ public class StudentResource extends ServerResource {
 
 	@Put
 	public Student updateStudent(Student s) {
+		
+		if (!RestApp.getInstance().authenticate(getRequest(), getResponse())) {
+			throw new NotAuthorizedException();
+		}
+		
 		return ss.updateStudent(s);
 	}
 

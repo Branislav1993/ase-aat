@@ -23,7 +23,7 @@
         <servlet-class>org.restlet.ext.servlet.ServerServlet</servlet-class>
         <init-param>
         	<param-name>org.restlet.application</param-name>
-            <param-value>de.tum.aat.rest.FirstStepsApplication</param-value>
+            <param-value>de.tum.aat.rest.RestApp</param-value>
         </init-param>
     </servlet>
 

@@ -43,22 +43,15 @@ public class StudentDAO {
 		}
 
 		if (s.getExerciseGroup() != null) {
-			throw new GenericException("Student is enrolled in the " + s.getExerciseGroup()
-					+ ". You can't delete registered student.");
+			throw new GenericException(
+					"Student is enrolled in the " + s.getExerciseGroup() + ". You can't delete registered student.");
 		}
 
 		ofy().delete().key(key).now();
 	}
 
 	public Student updateStudent(Student s) {
-		Student oldStudent = getStudent(s.getId());
-
-		if (oldStudent == null) {
-			throw new NotFoundException(Student.class);
-		}
-
-		oldStudent = s;
-		return saveStudent(oldStudent);
+		return saveStudent(s);
 	}
 
 	public Student registerExerciseGroupForStudent(long groupId, long studentId) {
@@ -85,7 +78,7 @@ public class StudentDAO {
 		} else {
 			g.getStudents().add(s);
 		}
-		
+
 		ofy().save().entity(g).now();
 
 		return saveStudent(s);

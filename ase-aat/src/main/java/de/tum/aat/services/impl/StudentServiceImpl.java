@@ -10,6 +10,7 @@ import de.tum.aat.domain.ExerciseTimeslot;
 import de.tum.aat.domain.Student;
 import de.tum.aat.exceptions.GenericException;
 import de.tum.aat.exceptions.NotFoundException;
+import de.tum.aat.rest.RestApp;
 import de.tum.aat.services.StudentService;
 
 public class StudentServiceImpl implements StudentService {
@@ -36,6 +37,10 @@ public class StudentServiceImpl implements StudentService {
 			throw new GenericException("Use your @tum.de email address for the registration!");
 		}
 
+		if (s.getPassword() == null || s.getPassword().length() < 1) {
+			throw new GenericException("Please insert password!");
+		}
+
 		List<Student> all = sd.getStudents();
 
 		if (all == null || !all.isEmpty()) {
@@ -53,7 +58,23 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public Student updateStudent(Student s) {
-		return sd.updateStudent(s);
+
+		Student oldStudent = getStudent(s.getId());
+
+		if (oldStudent == null) {
+			throw new NotFoundException(Student.class);
+		}
+
+		if (!oldStudent.getPassword().equals(s.getPassword())) {
+			RestApp.changeSecret(oldStudent.getEmail(), s.getPassword());
+		}
+
+		String email = oldStudent.getEmail();
+
+		oldStudent = s;
+		oldStudent.setEmail(email);
+
+		return sd.updateStudent(oldStudent);
 	}
 
 	@Override

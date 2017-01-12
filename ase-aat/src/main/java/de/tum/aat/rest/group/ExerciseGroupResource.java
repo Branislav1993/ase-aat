@@ -8,6 +8,8 @@ import org.restlet.resource.Put;
 import org.restlet.resource.ServerResource;
 
 import de.tum.aat.domain.ExerciseGroup;
+import de.tum.aat.exceptions.NotAuthorizedException;
+import de.tum.aat.rest.RestApp;
 import de.tum.aat.services.ExerciseGroupService;
 import de.tum.aat.services.impl.ExerciseGroupServiceImpl;
 
@@ -20,7 +22,12 @@ public class ExerciseGroupResource extends ServerResource {
 	}
 
 	@Get("json")
-	public List<ExerciseGroup> getExerciseGroups() {
+	public List<ExerciseGroup> getExerciseGroups() throws NotAuthorizedException {
+
+		if (!RestApp.getInstance().authenticate(getRequest(), getResponse())) {
+			throw new NotAuthorizedException();
+		}
+
 		return egs.getExerciseGroups();
 	}
 
