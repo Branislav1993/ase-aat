@@ -1,5 +1,8 @@
 package de.tum.aat.rest;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.restlet.Application;
 import org.restlet.Context;
 import org.restlet.Request;
@@ -11,6 +14,7 @@ import org.restlet.security.ChallengeAuthenticator;
 import org.restlet.security.MapVerifier;
 
 import de.tum.aat.dao.StudentDAO;
+import de.tum.aat.domain.ExerciseTimeslot;
 import de.tum.aat.domain.Student;
 import de.tum.aat.rest.assistant.TeachingAssistantIdSpecificResource;
 import de.tum.aat.rest.assistant.TeachingAssistantResource;
@@ -33,6 +37,24 @@ public class RestApp extends Application {
 	private ChallengeScheme challengeScheme = ChallengeScheme.HTTP_BASIC;
 	private String realm = "ASEAAT_REALM";
 	private static MapVerifier verifier = new MapVerifier();
+	private static Map<Long, Map<ExerciseTimeslot, Integer>> qrCodeAttendenceVerifier = new HashMap<>();
+	private static Map<Long, Map<ExerciseTimeslot, Integer>> qrCodePresentationVerifier = new HashMap<>();
+
+	public static Map<Long, Map<ExerciseTimeslot, Integer>> getQrCodeAttendenceVerifier() {
+		return qrCodeAttendenceVerifier;
+	}
+
+	public static void setQrCodeAttendenceVerifier(Map<Long, Map<ExerciseTimeslot, Integer>> qrCodeAttendenceVerifier) {
+		RestApp.qrCodeAttendenceVerifier = qrCodeAttendenceVerifier;
+	}
+
+	public static Map<Long, Map<ExerciseTimeslot, Integer>> getQrCodePresentationVerifier() {
+		return qrCodePresentationVerifier;
+	}
+
+	public static void setQrCodePresentationVerifier(Map<Long, Map<ExerciseTimeslot, Integer>> qrCodePresentationVerifier) {
+		RestApp.qrCodePresentationVerifier = qrCodePresentationVerifier;
+	}
 
 	private ChallengeAuthenticator createAuthenticator() {
 
