@@ -99,11 +99,11 @@ public class QRGenerator {
 			throw new GenericException("No current exercise session.");
 		}
 
-		if (!s.getTimeslotsAttended().contains(currentTimeslot)) {
+		if (s.getTimeslotsAttended() != null && !s.getTimeslotsAttended().contains(currentTimeslot)) {
 			s.getTimeslotsAttended().add(currentTimeslot);
-			return packAttendanceURL(s, currentTimeslot);
+			return packPresentationURL(s, currentTimeslot);
 		} else {
-			throw new GenericException("Already registered attendance.");
+			throw new GenericException("Register attendance first!");
 		}
 	}
 
