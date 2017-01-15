@@ -11,7 +11,7 @@
     tools:context=".activity.LoginActivity"
     android:focusableInTouchMode="true">
 
-    <!-- Login progress -->
+     <!--Login progress-->
     <ProgressBar
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"

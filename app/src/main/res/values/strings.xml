@@ -12,6 +12,10 @@
     <string name="display_presentation_qr">Display presentation QR code</string>
     <string name="exercise_groups">Exercise groups</string>
     <string name="user_profile_and_statistics">User profile and statistics</string>
+    <string name="incorrect_login">Email or password incorrect</string>
+    <string name="unknown_error">An unknown error occurred</string>
+    <string name="cant_sign_out">Can\'t sign out</string>
+
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
