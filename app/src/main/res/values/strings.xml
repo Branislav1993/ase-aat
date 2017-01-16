@@ -15,6 +15,7 @@
     <string name="incorrect_login">Email or password incorrect</string>
     <string name="unknown_error">An unknown error occurred</string>
     <string name="cant_sign_out">Can\'t sign out</string>
+    \<string name="register_success">You are successfully registered! You can now sign in.</string>
 
 
     <!-- Strings related to login -->
