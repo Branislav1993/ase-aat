@@ -21,6 +21,7 @@ import de.tum.aat.rest.assistant.TeachingAssistantResource;
 import de.tum.aat.rest.group.ExerciseGroupIdSpecificResource;
 import de.tum.aat.rest.group.ExerciseGroupResource;
 import de.tum.aat.rest.student.AttendanceResource;
+import de.tum.aat.rest.student.LoginResource;
 import de.tum.aat.rest.student.PresentationResource;
 import de.tum.aat.rest.student.RegisterAttendanceResource;
 import de.tum.aat.rest.student.RegisterPresentationResource;
@@ -108,6 +109,8 @@ public class RestApp extends Application {
 
 		router.attach("/attendance", RegisterAttendanceResource.class);
 		router.attach("/presentation", RegisterPresentationResource.class);
+		
+		router.attach("/login", LoginResource.class);
 
 		authenticatior.setNext(router);
 

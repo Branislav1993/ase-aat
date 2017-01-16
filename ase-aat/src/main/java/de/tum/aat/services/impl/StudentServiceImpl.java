@@ -1,5 +1,6 @@
 package de.tum.aat.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -114,8 +115,13 @@ public class StudentServiceImpl implements StudentService {
 		ExerciseGroup g = egd.getExerciseGroup(s.getExerciseGroup());
 		ExerciseTimeslot ts = new ExerciseTimeslot(start, end);
 
-		if (!g.currentTimeslot().equals(ts)) {
+		if (!ts.equals(g.currentTimeslot())) {
 			throw new GenericException("No current session!");
+		}
+
+		if (s.getTimeslotsAttended() == null) {
+			ArrayList<ExerciseTimeslot> timeslots = new ArrayList<>();
+			s.setTimeslotsAttended(timeslots);
 		}
 
 		s.getTimeslotsAttended().add(ts);
@@ -129,7 +135,7 @@ public class StudentServiceImpl implements StudentService {
 		ExerciseGroup g = egd.getExerciseGroup(s.getExerciseGroup());
 		ExerciseTimeslot ts = new ExerciseTimeslot(start, end);
 
-		if (!g.currentTimeslot().equals(ts)) {
+		if (!ts.equals(g.currentTimeslot())) {
 			throw new GenericException("No current session!");
 		}
 
@@ -137,6 +143,17 @@ public class StudentServiceImpl implements StudentService {
 		s.setNumberOfPresentations(numberOfPresentations++);
 
 		return saveStudent(s);
+	}
+
+	@Override
+	public Student getStudent(String email) {
+		List<Student> students = getStudents();
+		for (Student s : students) {
+			if (s.getEmail().equals(email)) {
+				return s;
+			}
+		}
+		throw new GenericException("No student with the given email!");
 	}
 
 }
