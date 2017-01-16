@@ -5,7 +5,7 @@
     <string name="title_activity_login">Sign in</string>
     <string name="not_registered_yet">"Haven't registered yet? Please register by clicking the button below."</string>
     <string name="title_activity_register">Register</string>
-    <string name="title_activity_exercise_list">List of exercises</string>
+    <string name="title_activity_exercise_list">List of exercise groups</string>
     <string name="title_activity_exercise_details">Exercise details</string>
     <string name="title_activity_choice">Advanced topics of SE</string>
     <string name="display_presence_qr">Display presence QR code</string>
@@ -15,7 +15,10 @@
     <string name="incorrect_login">Email or password incorrect</string>
     <string name="unknown_error">An unknown error occurred</string>
     <string name="cant_sign_out">Can\'t sign out</string>
-    \<string name="register_success">You are successfully registered! You can now sign in.</string>
+    <string name="register_success">You are successfully registered! You can now sign in.</string>
+    <string name="groups_error">An error occurred! The exercice groups cannot be loaded.</string>
+    <string name="exercise_group">Exercise group</string>
+    <string name="instructor">Instructor:</string>
 
 
     <!-- Strings related to login -->

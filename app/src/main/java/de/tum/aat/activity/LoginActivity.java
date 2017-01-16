@@ -47,6 +47,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.tum.aat.R;
+import de.tum.aat.session.SessionObject;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -72,7 +73,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        final SessionObject session = (SessionObject) getApplication();
+//        Log.v("APP", "+" + session.getEmail());
+//        Log.v("APP", "+" + session.getPassword());
+        if(session.getCredentials() != null) {
+            Intent intent = new Intent(LoginActivity.this, ChoiceActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
         setContentView(R.layout.activity_login);
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -212,7 +224,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.v("RESPONSE", response);
+//                        Log.v("RESPONSE", response);
+                        final SessionObject session = (SessionObject) getApplication();
+                        String credentials = email + ":" + password;
+                        session.setCredentials(Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP));
                         Intent intent = new Intent(LoginActivity.this, ChoiceActivity.class);
                         finish();
                         startActivity(intent);
@@ -244,7 +259,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 headers.put("Authorization", auth);
                 return headers;
             }
-        };;
+        };
 
         queue.add(stringRequest);
     }
