@@ -27,7 +27,7 @@ public class LoginResource extends ServerResource {
 
 		String email = "";
 		try {
-			email = getAttribute("email");
+			email = getQueryValue("email");
 		} catch (Exception e) {
 			throw new GenericException("Please provide an email!");
 		}
