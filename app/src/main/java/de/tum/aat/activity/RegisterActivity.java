@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -219,10 +220,18 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                try {
-                    handleError(new String(error.networkResponse.data, "UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
+                if(400 == error.networkResponse.statusCode) {
+                    try {
+                        handleError(new String(error.networkResponse.data, "UTF-8"));
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Log.w(TAG, "Exception: " + error.getLocalizedMessage());
+                    Toast toast = Toast.makeText(RegisterActivity.this, R.string.unknown_error, Toast.LENGTH_LONG);
+                    TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+                    v.setTextColor(Color.RED);
+                    toast.show();
                 }
             }
         }) {

@@ -9,10 +9,13 @@
     tools:context="de.tum.aat.fragment.QRFragment">
 
     <TextView
+        android:id="@+id/error_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="invisible"
-        android:textColor="#ff0000"/>
+        android:gravity="center_horizontal"
+        android:textColor="#ff0000"
+        android:textSize="18sp"/>
 
     <ImageView
         android:id="@+id/qr_code"

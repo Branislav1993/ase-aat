@@ -2,13 +2,11 @@ package de.tum.aat.fragment;
 
 import android.app.DialogFragment;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,20 +25,18 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
 import de.tum.aat.R;
-import de.tum.aat.activity.ChoiceActivity;
-import de.tum.aat.model.ExerciseGroup;
+import de.tum.aat.model.BadRequestError;
 import de.tum.aat.model.QRCode;
 import de.tum.aat.session.SessionObject;
-import de.tum.aat.utils.BarcodeHolder;
 import de.tum.aat.utils.Utils;
 
 /**
@@ -72,6 +68,8 @@ public class QRFragment extends DialogFragment {
     public static QRFragment newInstance(boolean isAttendance) {
         if (!isAttendance) {
             QR_URL = QR_URL.replace("qrattendance", "qrpresentation");
+        } else {
+            QR_URL = QR_URL.replace("qrpresentation", "qrattendance");
         }
         QRFragment fragment = new QRFragment();
         Bundle args = new Bundle();
@@ -107,37 +105,47 @@ public class QRFragment extends DialogFragment {
             }
         });
 
-        ImageView qrCode = (ImageView) view.findViewById(R.id.qr_code);
+        ImageView qrPlaceholder = (ImageView) view.findViewById(R.id.qr_code);
+        TextView errorPlaceholder = (TextView) view.findViewById(R.id.error_text);
 
-        String barcode_content = getBarcodeContent(qrCode);
+        getAndRenderBarcode(qrPlaceholder, errorPlaceholder);
 
         return view;
     }
 
-    private String getBarcodeContent(final ImageView qrPlaceholder) {
+    private void getAndRenderBarcode(final ImageView qrPlaceholder, final TextView errorPlaceholder) {
         final SessionObject session = (SessionObject) getActivity().getApplication();
         if(session.getCredentials() == null || session.getId() == null) {
             Utils.clearBackStackAndLaunchLogin(getActivity());
         }
+
         String attendanceUrl = QR_URL.replace("{student_id}", Long.toString(session.getId()));
-        final BarcodeHolder holder = new BarcodeHolder();
         final RequestQueue queue = Volley.newRequestQueue(getActivity());
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, attendanceUrl,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.v("RESPONSE", response);
-                        holder.barcode = getUrl(response);
-                        buildImage(holder.barcode, qrPlaceholder);
+//                        Log.v("RESPONSE", response);
+                        String barcode = getUrl(response);
+                        buildImage(barcode, qrPlaceholder);
+                        errorPlaceholder.setVisibility(View.INVISIBLE);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.w(TAG, "Exception: " + error.getLocalizedMessage());
-                Toast toast = Toast.makeText(getActivity(), R.string.groups_error, Toast.LENGTH_LONG);
-                TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
-                v.setTextColor(Color.RED);
-                toast.show();
+                if(400 == error.networkResponse.statusCode) {
+                    try {
+                        handleError(new String(error.networkResponse.data, "UTF-8"), errorPlaceholder);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Log.w(TAG, "Exception: " + error.getLocalizedMessage());
+                    Toast toast = Toast.makeText(getActivity(), R.string.unknown_error, Toast.LENGTH_LONG);
+                    TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+                    v.setTextColor(Color.RED);
+                    toast.show();
+                }
             }
         }){
             @Override
@@ -152,7 +160,19 @@ public class QRFragment extends DialogFragment {
         };
 
         queue.add(stringRequest);
-        return holder.barcode;
+    }
+
+    private void handleError(String error, TextView errorPlaceholder) {
+        final Gson gson = new Gson();
+        final BadRequestError badReqError = gson.fromJson(error, BadRequestError.class);
+
+        errorPlaceholder.setText(badReqError.localizedMessage);
+        errorPlaceholder.setVisibility(View.VISIBLE);
+
+//        Toast toast = Toast.makeText(getActivity(), badReqError.localizedMessage, Toast.LENGTH_LONG);
+//        TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+//        v.setTextColor(Color.RED);
+//        toast.show();
     }
 
     private void buildImage(String barcode_content, ImageView qrPlaceholder) {
