@@ -142,7 +142,7 @@ public class StudentServiceImpl implements StudentService {
 		int numberOfPresentations = s.getNumberOfPresentations();
 		s.setNumberOfPresentations(numberOfPresentations++);
 
-		return saveStudent(s);
+		return sd.saveStudent(s);
 	}
 
 	@Override
