@@ -3,6 +3,7 @@ package de.tum.aat.dao;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.googlecode.objectify.Key;
@@ -76,7 +77,43 @@ public class StudentDAO {
 			students.add(s);
 			g.setStudents(students);
 		} else {
-			g.getStudents().add(s);
+			if (!g.getStudents().contains(s)) {
+				g.getStudents().add(s);
+			} else {
+				throw new GenericException("Student already registered for the selected exercise session!");
+			}
+		}
+
+		ofy().save().entity(g).now();
+
+		return saveStudent(s);
+	}
+
+	public Student deregisterExerciseGroupForStudent(long groupId, long studentId) {
+		Key<ExerciseGroup> groupKey = Key.create(ExerciseGroup.class, groupId);
+		Key<Student> studentKey = Key.create(Student.class, studentId);
+
+		ExerciseGroup g = ofy().load().key(groupKey).now();
+		Student s = ofy().load().key(studentKey).now();
+
+		if (s == null) {
+			throw new NotFoundException(Student.class);
+		}
+
+		if (g == null) {
+			throw new NotFoundException(ExerciseGroup.class);
+		}
+
+		s.setExerciseGroup(null);
+
+		Iterator<Student> iterator = g.getStudents().iterator();
+
+		while (iterator.hasNext()) {
+			Student current = iterator.next();
+			if (current.equals(s)) {
+				iterator.remove();
+				break;
+			}
 		}
 
 		ofy().save().entity(g).now();

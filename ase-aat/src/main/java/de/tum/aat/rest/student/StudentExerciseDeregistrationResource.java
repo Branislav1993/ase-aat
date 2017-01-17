@@ -8,16 +8,17 @@ import de.tum.aat.exceptions.GenericException;
 import de.tum.aat.services.StudentService;
 import de.tum.aat.services.impl.StudentServiceImpl;
 
-public class StudentExerciseRegistrationResource extends ServerResource {
+public class StudentExerciseDeregistrationResource extends ServerResource {
 
 	private StudentService ss;
 
-	public StudentExerciseRegistrationResource() {
+	public StudentExerciseDeregistrationResource() {
 		ss = new StudentServiceImpl();
 	}
+	
 
 	@Get("json")
-	public Student registerExerciseGroupForStudent() {
+	public Student deregisterExerciseGroupForStudent() {
 		long groupId = Long.MIN_VALUE;
 		long studentId = Long.MIN_VALUE;
 		try {
@@ -26,7 +27,8 @@ public class StudentExerciseRegistrationResource extends ServerResource {
 		} catch (Exception e) {
 			throw new GenericException("Provide both student and exercise group ID in the right format!");
 		}
-		return ss.registerExerciseGroupForStudent(groupId, studentId);
+		return ss.deregisterExerciseGroupForStudent(groupId, studentId);
 	}
-
+	
+	
 }

@@ -20,8 +20,10 @@ public interface StudentService {
 
 	public Student registerAttendance(long studentId, long start, long end);
 
-	Student registerPresentation(long studentId, long start, long end);
+	public Student registerPresentation(long studentId, long start, long end);
 
 	public Student getStudent(String email);
+
+	public Student deregisterExerciseGroupForStudent(long groupId, long studentId);
 
 }

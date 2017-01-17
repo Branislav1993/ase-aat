@@ -108,6 +108,11 @@ public class StudentServiceImpl implements StudentService {
 	public Student registerExerciseGroupForStudent(long groupId, long studentId) {
 		return sd.registerExerciseGroupForStudent(groupId, studentId);
 	}
+	
+	@Override
+	public Student deregisterExerciseGroupForStudent(long groupId, long studentId) {
+		return sd.deregisterExerciseGroupForStudent(groupId, studentId);
+	}
 
 	@Override
 	public Student registerAttendance(long studentId, long start, long end) {
