@@ -7,7 +7,16 @@ import android.app.Application;
  */
 public class SessionObject extends Application {
 
+    private Long id;
     private String credentials;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getCredentials() {
         return credentials;

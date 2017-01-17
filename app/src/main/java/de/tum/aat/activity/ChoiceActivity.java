@@ -31,7 +31,7 @@ public class ChoiceActivity extends AppCompatActivity {
         presenceQrBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayQRCode();
+                displayQRCode(true);
             }
         });
 
@@ -39,7 +39,7 @@ public class ChoiceActivity extends AppCompatActivity {
         presentationQrBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayQRCode();
+                displayQRCode(false);
             }
         });
 
@@ -63,7 +63,7 @@ public class ChoiceActivity extends AppCompatActivity {
 
     }
 
-    private void displayQRCode() {
+    private void displayQRCode(boolean isAttendance) {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         Fragment prev = getFragmentManager().findFragmentByTag("dialog");
         if (prev != null) {
@@ -72,7 +72,7 @@ public class ChoiceActivity extends AppCompatActivity {
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment newFragment = QRFragment.newInstance();
+        DialogFragment newFragment = QRFragment.newInstance(isAttendance);
         newFragment.show(ft, "dialog");
     }
 

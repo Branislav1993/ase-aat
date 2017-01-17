@@ -2,23 +2,46 @@ package de.tum.aat.fragment;
 
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import de.tum.aat.R;
+import de.tum.aat.activity.ChoiceActivity;
+import de.tum.aat.model.ExerciseGroup;
+import de.tum.aat.model.QRCode;
+import de.tum.aat.session.SessionObject;
+import de.tum.aat.utils.BarcodeHolder;
+import de.tum.aat.utils.Utils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +54,10 @@ import de.tum.aat.R;
  */
 public class QRFragment extends DialogFragment {
 
+    private static final String TAG = QRFragment.class.getCanonicalName();
+    private static String QR_URL = "http://ase-aat10.appspot.com/rest/qrattendance/{student_id}";
+//    {student_id}
+
     private OnFragmentInteractionListener mListener;
     private final static int WIDTH = 500;
     private final static int WHITE = 0xFFFFFFFF;
@@ -42,7 +69,10 @@ public class QRFragment extends DialogFragment {
      *
      * @return A new instance of fragment QRFragment.
      */
-    public static QRFragment newInstance() {
+    public static QRFragment newInstance(boolean isAttendance) {
+        if (!isAttendance) {
+            QR_URL = QR_URL.replace("qrattendance", "qrpresentation");
+        }
         QRFragment fragment = new QRFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -56,6 +86,11 @@ public class QRFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        final SessionObject session = (SessionObject) getActivity().getApplication();
+        if(session.getCredentials() == null) {
+            Utils.clearBackStackAndLaunchLogin(getActivity());
+        }
     }
 
     @Override
@@ -72,10 +107,55 @@ public class QRFragment extends DialogFragment {
             }
         });
 
-        String barcode_content = "123456";
-
         ImageView qrCode = (ImageView) view.findViewById(R.id.qr_code);
 
+        String barcode_content = getBarcodeContent(qrCode);
+
+        return view;
+    }
+
+    private String getBarcodeContent(final ImageView qrPlaceholder) {
+        final SessionObject session = (SessionObject) getActivity().getApplication();
+        if(session.getCredentials() == null || session.getId() == null) {
+            Utils.clearBackStackAndLaunchLogin(getActivity());
+        }
+        String attendanceUrl = QR_URL.replace("{student_id}", Long.toString(session.getId()));
+        final BarcodeHolder holder = new BarcodeHolder();
+        final RequestQueue queue = Volley.newRequestQueue(getActivity());
+        final StringRequest stringRequest = new StringRequest(Request.Method.GET, attendanceUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.v("RESPONSE", response);
+                        holder.barcode = getUrl(response);
+                        buildImage(holder.barcode, qrPlaceholder);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.w(TAG, "Exception: " + error.getLocalizedMessage());
+                Toast toast = Toast.makeText(getActivity(), R.string.groups_error, Toast.LENGTH_LONG);
+                TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+                v.setTextColor(Color.RED);
+                toast.show();
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                final SessionObject session = (SessionObject) getActivity().getApplication();
+//                Log.v(TAG, session.getCredentials());
+                String auth = "Basic " + session.getCredentials();
+                headers.put("Authorization", auth);
+                return headers;
+            }
+        };
+
+        queue.add(stringRequest);
+        return holder.barcode;
+    }
+
+    private void buildImage(String barcode_content, ImageView qrPlaceholder) {
         Bitmap bm = null;
         try {
             bm = encodeAsBitmap(barcode_content);
@@ -84,10 +164,15 @@ public class QRFragment extends DialogFragment {
         }
 
         if(bm != null) {
-            qrCode.setImageBitmap(bm);
+            qrPlaceholder.setImageBitmap(bm);
         }
+    }
 
-        return view;
+    private String getUrl(String response) {
+        final Gson gson = new Gson();
+        final QRCode qrCode = gson.fromJson(response, QRCode.class);
+
+        return qrCode.url;
     }
 
     Bitmap encodeAsBitmap(String str) throws WriterException {

@@ -22,6 +22,7 @@ import java.util.Map;
 import de.tum.aat.R;
 import de.tum.aat.activity.ChoiceActivity;
 import de.tum.aat.activity.LoginActivity;
+import de.tum.aat.session.SessionObject;
 
 /**
  * Created by Naum on 1/3/2017.
@@ -70,6 +71,9 @@ public class Utils {
     }
 
     public static void clearBackStackAndLaunchLogin(Activity activity) {
+        final SessionObject session = (SessionObject) activity.getApplication();
+        session.setCredentials(null);
+        session.setId(null);
         Intent intent = new Intent(activity, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(intent);

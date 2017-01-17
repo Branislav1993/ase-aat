@@ -12,7 +12,7 @@ public class Student implements Serializable {
     public String lastName;
     public String email;
     public String password;
-    public GroupTimeslot timeslotsAttended;
+    public GroupTimeslot[] timeslotsAttended;
     public int numberOfPresentations;
     public boolean hasBonus;
     public int exerciseGroup;

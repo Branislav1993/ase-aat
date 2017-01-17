@@ -40,6 +40,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,6 +48,8 @@ import java.util.List;
 import java.util.Map;
 
 import de.tum.aat.R;
+import de.tum.aat.model.ExerciseGroup;
+import de.tum.aat.model.Student;
 import de.tum.aat.session.SessionObject;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -61,7 +64,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private static final int REQUEST_READ_CONTACTS = 0;
 
-    private static final String LOGIN_URL = "http://ase-aat10.appspot.com/rest/groups/";
+    private static final String LOGIN_URL = "http://ase-aat10.appspot.com/rest/login?email={email}";
     private static final String TAG = LoginActivity.class.getCanonicalName();
 
     // UI references.
@@ -220,11 +223,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private void login(final String email, final String password) {
         final RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
-        final StringRequest stringRequest = new StringRequest(Request.Method.GET, LOGIN_URL,
+        String loginUrl = LOGIN_URL.replace("{email}", email);
+        final StringRequest stringRequest = new StringRequest(Request.Method.GET, loginUrl,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 //                        Log.v("RESPONSE", response);
+                        handleResponse(response);
                         final SessionObject session = (SessionObject) getApplication();
                         String credentials = email + ":" + password;
                         session.setCredentials(Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP));
@@ -235,7 +240,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (401 == error.networkResponse.statusCode) {
+                if (null != error.networkResponse && 401 == error.networkResponse.statusCode) {
                     Toast toast = Toast.makeText(LoginActivity.this, R.string.incorrect_login, Toast.LENGTH_LONG);
                     TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
                     v.setTextColor(Color.RED);
@@ -255,13 +260,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 String credentials = email + ":" + password;
                 String auth = "Basic "
                         + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
-//                    headers.put("Content-Type", "application/json");
                 headers.put("Authorization", auth);
                 return headers;
             }
         };
 
         queue.add(stringRequest);
+    }
+
+    private void handleResponse(String response) {
+        final Gson gson = new Gson();
+        final Student student = gson.fromJson(response, Student.class);
+
+        final SessionObject session = (SessionObject) getApplication();
+        session.setId(student.id);
     }
 
     private boolean isEmailValid(String email) {
