@@ -99,7 +99,7 @@ public class QRGenerator {
 			throw new GenericException("No current exercise session.");
 		}
 
-		if (s.getTimeslotsAttended().contains(currentTimeslot)) {
+		if (s.getTimeslotsAttended() != null && s.getTimeslotsAttended().contains(currentTimeslot)) {
 			return packPresentationURL(s, currentTimeslot);
 		} else {
 			throw new GenericException("Register attendance first!");

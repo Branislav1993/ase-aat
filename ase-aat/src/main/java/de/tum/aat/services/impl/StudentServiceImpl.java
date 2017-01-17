@@ -126,7 +126,7 @@ public class StudentServiceImpl implements StudentService {
 
 		s.getTimeslotsAttended().add(ts);
 
-		return saveStudent(s);
+		return sd.saveStudent(s);
 	}
 
 	@Override
