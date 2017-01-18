@@ -5,9 +5,9 @@
     <string name="title_activity_login">Sign in</string>
     <string name="not_registered_yet">"Haven't registered yet? Please register by clicking the button below."</string>
     <string name="title_activity_register">Register</string>
-    <string name="title_activity_exercise_list">List of exercise groups</string>
+    <string name="title_activity_exercise_list">Exercise Groups</string>
     <string name="title_activity_exercise_details">Exercise details</string>
-    <string name="title_activity_choice">Advanced topics of SE</string>
+    <string name="title_activity_choice">Advanced Topics of SE</string>
     <string name="display_presence_qr">Display presence QR code</string>
     <string name="display_presentation_qr">Display presentation QR code</string>
     <string name="exercise_groups">Exercise groups</string>
@@ -19,6 +19,19 @@
     <string name="groups_error">An error occurred! The exercice groups cannot be loaded.</string>
     <string name="exercise_group">Exercise group</string>
     <string name="instructor">Instructor:</string>
+    <string name="attendance">attendance</string>
+    <string name="presentation">presentation</string>
+    <string name="user_profile">user profile</string>
+    <string name="students">Students:</string>
+    <string name="registered">You have successfully registered for an exercise group</string>
+    <string name="deregistered">You have successfully deregistered from an exercise group</string>
+    <string name="student_name">"Name: "</string>
+    <string name="student_last_name">"Last name: "</string>
+    <string name="student_email">"Email: "</string>
+    <string name="student_has_bonus">"Bonus awarded: "</string>
+    <string name="student_num_attended">"Number of attended exercises: "</string>
+    <string name="student_num_presentations">"Number of presentations: "</string>
+    <string name="student_timeslots_attended">"Timeslots attended: "</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

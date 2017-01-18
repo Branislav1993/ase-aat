@@ -100,7 +100,7 @@ public class ExerciseListActivity extends AppCompatActivity {
                 final ExerciseGroup exerciseGroup = (ExerciseGroup) listView.getAdapter().getItem(position);
                 final Intent intent = new Intent(ExerciseListActivity.this, ExerciseDetailsActivity.class);
 //                Toast.makeText(ExerciseListActivity.this, "You clicked on " + exerciseGroup, Toast.LENGTH_SHORT).show();
-                intent.putExtra("id", exerciseGroup.id);
+                intent.putExtra("group", exerciseGroup);
                 startActivity(intent);
             }
         });

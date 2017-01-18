@@ -26,7 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_weight="1"
-        android:text="@string/display_presence_qr"
+        android:text="@string/attendance"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <Button
@@ -36,7 +37,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_weight="1"
-        android:text="@string/display_presentation_qr"
+        android:text="@string/presentation"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <Button
@@ -47,6 +49,7 @@
         android:layout_marginTop="16dp"
         android:layout_weight="1"
         android:text="@string/exercise_groups"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <Button
@@ -56,7 +59,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_weight="1"
-        android:text="@string/user_profile_and_statistics"
+        android:text="@string/user_profile"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
 

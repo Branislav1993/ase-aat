@@ -7,8 +7,17 @@ import android.app.Application;
  */
 public class SessionObject extends Application {
 
-    private Long id;
     private String credentials;
+    private Long id;
+    private Long exerciseGroup;
+
+    public String getCredentials() {
+        return credentials;
+    }
+
+    public void setCredentials(String credentials) {
+        this.credentials = credentials;
+    }
 
     public Long getId() {
         return id;
@@ -18,13 +27,17 @@ public class SessionObject extends Application {
         this.id = id;
     }
 
-    public String getCredentials() {
-        return credentials;
+
+    public Long getExerciseGroup() {
+        return exerciseGroup;
     }
 
-    public void setCredentials(String credentials) {
-        this.credentials = credentials;
+    public void setExerciseGroup(Long exerciseGroup) {
+        this.exerciseGroup = exerciseGroup;
     }
+
+
+
 
 
 }

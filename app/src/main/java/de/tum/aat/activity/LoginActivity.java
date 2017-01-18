@@ -274,6 +274,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         final SessionObject session = (SessionObject) getApplication();
         session.setId(student.id);
+        session.setExerciseGroup(new Long(student.exerciseGroup));
+
+//        Log.v("LOGIN", session.getCredentials() == null? "prazno" : session.getCredentials());
+//        Log.v("LOGIN", Long.toString(session.getId()));
     }
 
     private boolean isEmailValid(String email) {

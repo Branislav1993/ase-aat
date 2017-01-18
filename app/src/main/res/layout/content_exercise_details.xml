@@ -12,14 +12,44 @@
     tools:context=".activity.ExerciseDetailsActivity"
     tools:showIn="@layout/activity_exercise_details">
 
-    <Button
-        android:id="@+id/presence_qr_button"
-        style="?android:textAppearanceButton"
+    <TextView
+        android:id="@+id/gr_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_weight="1"
-        android:text="@string/action_register_for_group"
-        android:textStyle="bold" />
+        android:gravity="center_horizontal"
+        android:textSize="32sp"
+        android:textColor="#000000"/>
+    
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gr_name">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/gr_students"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                android:layout_marginTop="@dimen/activity_vertical_margin"/>
+
+            <TextView
+                android:id="@+id/sessions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </RelativeLayout>
