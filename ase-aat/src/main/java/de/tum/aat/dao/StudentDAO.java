@@ -3,7 +3,6 @@ package de.tum.aat.dao;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import com.googlecode.objectify.Key;
@@ -106,14 +105,13 @@ public class StudentDAO {
 
 		s.setExerciseGroup(null);
 
-		Iterator<Student> iterator = g.getStudents().iterator();
+		ArrayList<Student> students = (ArrayList<Student>) g.getStudents();
 
-		while (iterator.hasNext()) {
-			Student current = iterator.next();
-			if (current.equals(s)) {
-				iterator.remove();
-				break;
-			}
+		if (students != null && students.contains(s)) {
+			students.remove(s);
+			g.setStudents(students);
+		} else {
+			throw new GenericException("Student is not in the selected exercise group!");
 		}
 
 		ofy().save().entity(g).now();
