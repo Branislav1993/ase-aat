@@ -108,7 +108,7 @@ public class StudentServiceImpl implements StudentService {
 	public Student registerExerciseGroupForStudent(long groupId, long studentId) {
 		return sd.registerExerciseGroupForStudent(groupId, studentId);
 	}
-	
+
 	@Override
 	public Student deregisterExerciseGroupForStudent(long groupId, long studentId) {
 		return sd.deregisterExerciseGroupForStudent(groupId, studentId);
@@ -131,6 +131,10 @@ public class StudentServiceImpl implements StudentService {
 
 		s.getTimeslotsAttended().add(ts);
 
+		if (s.getTimeslotsAttended().size() >= 10 && s.getNumberOfPresentations() > 0) {
+			s.setHasBonus(true);
+		}
+
 		return sd.saveStudent(s);
 	}
 
@@ -146,6 +150,10 @@ public class StudentServiceImpl implements StudentService {
 
 		int numberOfPresentations = s.getNumberOfPresentations();
 		s.setNumberOfPresentations(numberOfPresentations++);
+
+		if (s.getTimeslotsAttended().size() >= 10 && s.getNumberOfPresentations() > 0) {
+			s.setHasBonus(true);
+		}
 
 		return sd.saveStudent(s);
 	}
