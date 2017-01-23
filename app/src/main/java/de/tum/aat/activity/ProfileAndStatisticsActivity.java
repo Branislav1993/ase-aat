@@ -66,11 +66,11 @@ public class ProfileAndStatisticsActivity extends AppCompatActivity {
         timeslotsAttended = (TextView) findViewById(R.id.student_timeslots_attended);
 
         final SessionObject session = (SessionObject) getApplication();
-        if (session.getCredentials() == null || session.getId() == null) {
+        if (session.getCredentials() == null || session.getCurStudent() == null) {
             Utils.clearBackStackAndLaunchLogin(this);
         }
 
-        String studentUrl = STUDENT_URL.replace("{student_id}", Long.toString(session.getId()));
+        String studentUrl = STUDENT_URL.replace("{student_id}", Long.toString(session.getCurStudent().id));
         final RequestQueue queue = Volley.newRequestQueue(ProfileAndStatisticsActivity.this);
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, studentUrl,
                 new Response.Listener<String>() {

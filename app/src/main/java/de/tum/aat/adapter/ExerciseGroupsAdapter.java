@@ -34,6 +34,7 @@ import java.util.Map;
 import de.tum.aat.R;
 import de.tum.aat.model.BadRequestError;
 import de.tum.aat.model.ExerciseGroup;
+import de.tum.aat.model.Student;
 import de.tum.aat.session.SessionObject;
 import de.tum.aat.utils.Utils;
 
@@ -76,11 +77,11 @@ public class ExerciseGroupsAdapter extends ArrayAdapter<ExerciseGroup> {
         numStudents.setText("Students: " + (exerciseGroup.students == null ? "0" : Integer.toString(exerciseGroup.students.length)));
 
         final SessionObject session = (SessionObject) ctx.getApplication();
-        if (session.getCredentials() == null || session.getId() == null) {
+        if (session.getCredentials() == null || session.getCurStudent() == null) {
             Utils.clearBackStackAndLaunchLogin(ctx);
         }
 
-        if(session.getExerciseGroup() != null && session.getExerciseGroup() == exerciseGroup.id) {
+        if(session.getCurStudent().exerciseGroup != null && session.getCurStudent().exerciseGroup == exerciseGroup.id) {
             register.setVisibility(View.INVISIBLE);
             deregister.setVisibility(View.VISIBLE);
         } else {
@@ -97,7 +98,10 @@ public class ExerciseGroupsAdapter extends ArrayAdapter<ExerciseGroup> {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 register(exerciseGroup.id);
-                                session.setExerciseGroup(exerciseGroup.id);
+                                Student student = session.getCurStudent();
+                                student.exerciseGroup = exerciseGroup.id;
+                                session.setCurStudent(student);
+//                                session.setExerciseGroup(exerciseGroup.id);
                                 register.setVisibility(View.INVISIBLE);
                                 deregister.setVisibility(View.VISIBLE);
                             }
@@ -120,7 +124,10 @@ public class ExerciseGroupsAdapter extends ArrayAdapter<ExerciseGroup> {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 deregister(exerciseGroup.id);
-                                session.setExerciseGroup(null);
+                                Student student = session.getCurStudent();
+                                student.exerciseGroup = null;
+                                session.setCurStudent(student);
+//                                session.setExerciseGroup(null);
                                 register.setVisibility(View.VISIBLE);
                                 deregister.setVisibility(View.INVISIBLE);
                             }
@@ -140,11 +147,11 @@ public class ExerciseGroupsAdapter extends ArrayAdapter<ExerciseGroup> {
 
     private void register(Long groupId) {
         final SessionObject session = (SessionObject) ctx.getApplication();
-        if (session.getCredentials() == null || session.getId() == null) {
+        if (session.getCredentials() == null || session.getCurStudent() == null) {
             Utils.clearBackStackAndLaunchLogin(ctx);
         }
 
-        String registerGroup = GROUP_REGISTER_URL.replace("{student_id}", Long.toString(session.getId()));
+        String registerGroup = GROUP_REGISTER_URL.replace("{student_id}", Long.toString(session.getCurStudent().id));
         registerGroup = registerGroup.replace("{group_id}", Long.toString(groupId));
 //        Log.v(TAG, Long.toString(groupId));
 //        Log.v(TAG, GROUP_REGISTER_URL);
@@ -189,11 +196,11 @@ public class ExerciseGroupsAdapter extends ArrayAdapter<ExerciseGroup> {
 
     private void deregister(Long groupId) {
         final SessionObject session = (SessionObject) ctx.getApplication();
-        if(session.getCredentials() == null || session.getId() == null) {
+        if(session.getCredentials() == null || session.getCurStudent() == null) {
             Utils.clearBackStackAndLaunchLogin(ctx);
         }
 
-        String deregisterUrl = GROUP_DEREGISTER_URL.replace("{student_id}", Long.toString(session.getId()));
+        String deregisterUrl = GROUP_DEREGISTER_URL.replace("{student_id}", Long.toString(session.getCurStudent().id));
         deregisterUrl = deregisterUrl.replace("{group_id}", Long.toString(groupId));
 //        Log.v(TAG, Long.toString(groupId));
 //        Log.v(TAG, GROUP_DEREGISTER_URL);

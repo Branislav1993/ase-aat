@@ -2,14 +2,15 @@ package de.tum.aat.session;
 
 import android.app.Application;
 
+import de.tum.aat.model.Student;
+
 /**
  * Created by Naum on 1/16/2017.
  */
 public class SessionObject extends Application {
 
     private String credentials;
-    private Long id;
-    private Long exerciseGroup;
+    private Student curStudent;
 
     public String getCredentials() {
         return credentials;
@@ -19,25 +20,11 @@ public class SessionObject extends Application {
         this.credentials = credentials;
     }
 
-    public Long getId() {
-        return id;
+    public Student getCurStudent() {
+        return curStudent;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCurStudent(Student curStudent) {
+        this.curStudent = curStudent;
     }
-
-
-    public Long getExerciseGroup() {
-        return exerciseGroup;
-    }
-
-    public void setExerciseGroup(Long exerciseGroup) {
-        this.exerciseGroup = exerciseGroup;
-    }
-
-
-
-
-
 }

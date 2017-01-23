@@ -32,6 +32,7 @@
     <string name="student_num_attended">"Number of attended exercises: "</string>
     <string name="student_num_presentations">"Number of presentations: "</string>
     <string name="student_timeslots_attended">"Timeslots attended: "</string>
+    <string name="bonus_alert">You can see if you got a bonus in the section User Profile</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

@@ -7,14 +7,14 @@ import java.io.Serializable;
  */
 public class Student implements Serializable {
 
-    public long id;
+    public Long id;
     public String name;
     public String lastName;
     public String email;
     public String password;
     public GroupTimeslot[] timeslotsAttended;
-    public int numberOfPresentations;
-    public boolean hasBonus;
-    public int exerciseGroup;
+    public Integer numberOfPresentations;
+    public Boolean hasBonus;
+    public Long exerciseGroup;
 
 }

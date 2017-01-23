@@ -115,11 +115,11 @@ public class QRFragment extends DialogFragment {
 
     private void getAndRenderBarcode(final ImageView qrPlaceholder, final TextView errorPlaceholder) {
         final SessionObject session = (SessionObject) getActivity().getApplication();
-        if(session.getCredentials() == null || session.getId() == null) {
+        if(session.getCredentials() == null || session.getCurStudent() == null) {
             Utils.clearBackStackAndLaunchLogin(getActivity());
         }
 
-        String attendanceUrl = QR_URL.replace("{student_id}", Long.toString(session.getId()));
+        String attendanceUrl = QR_URL.replace("{student_id}", Long.toString(session.getCurStudent().id));
         final RequestQueue queue = Volley.newRequestQueue(getActivity());
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, attendanceUrl,
                 new Response.Listener<String>() {

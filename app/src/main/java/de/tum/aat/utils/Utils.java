@@ -73,9 +73,9 @@ public class Utils {
     public static void clearBackStackAndLaunchLogin(Activity activity) {
         final SessionObject session = (SessionObject) activity.getApplication();
         session.setCredentials(null);
-        session.setId(null);
-        Log.v("UTILS", session.getCredentials() == null ? "prazno" : session.getCredentials());
-        Log.v("UTILS", Long.toString(session.getId() == null ? 0 : session.getId()));
+        session.setCurStudent(null);
+//        Log.v("UTILS", session.getCredentials() == null ? "prazno" : session.getCredentials());
+//        Log.v("UTILS", Long.toString(session.getId() == null ? 0 : session.getId()));
         Intent intent = new Intent(activity, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(intent);

@@ -273,8 +273,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         final Student student = gson.fromJson(response, Student.class);
 
         final SessionObject session = (SessionObject) getApplication();
-        session.setId(student.id);
-        session.setExerciseGroup(new Long(student.exerciseGroup));
+        session.setCurStudent(student);
+//        session.setId(student.id);
+//        session.setExerciseGroup(new Long(student.exerciseGroup));
 
 //        Log.v("LOGIN", session.getCredentials() == null? "prazno" : session.getCredentials());
 //        Log.v("LOGIN", Long.toString(session.getId()));
