@@ -149,7 +149,7 @@ public class StudentServiceImpl implements StudentService {
 		}
 
 		int numberOfPresentations = s.getNumberOfPresentations();
-		s.setNumberOfPresentations(numberOfPresentations++);
+		s.setNumberOfPresentations(++numberOfPresentations);
 
 		if (s.getTimeslotsAttended().size() >= 10 && s.getNumberOfPresentations() > 0) {
 			s.setHasBonus(true);
