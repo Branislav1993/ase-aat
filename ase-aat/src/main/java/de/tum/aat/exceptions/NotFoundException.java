@@ -12,7 +12,7 @@ public class NotFoundException extends RuntimeException {
 	}
 
 	private static String generateMessage(Class<?> c) {
-		String message = "";
+		String message;
 
 		String className = c.getName();
 

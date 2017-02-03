@@ -12,7 +12,7 @@ public class NoIdException extends RuntimeException {
 	}
 
 	private static String generateMessage(Class<?> c) {
-		String message = "";
+		String message;
 
 		String[] fullName = c.getName().split(".");
 

@@ -54,7 +54,8 @@ public class RestApp extends Application {
 		return qrCodePresentationVerifier;
 	}
 
-	public static void setQrCodePresentationVerifier(Map<Long, Map<ExerciseTimeslot, Integer>> qrCodePresentationVerifier) {
+	public static void setQrCodePresentationVerifier(
+			Map<Long, Map<ExerciseTimeslot, Integer>> qrCodePresentationVerifier) {
 		RestApp.qrCodePresentationVerifier = qrCodePresentationVerifier;
 	}
 
@@ -89,9 +90,6 @@ public class RestApp extends Application {
 
 		Router router = new Router(getContext());
 
-		router.attach("/", HelloWorldResource.class);
-		router.attach("/guestbook/", GuestbookResource.class);
-		router.attach("/guestbook/{greeting}", GreetingResource.class);
 		// student resources
 		router.attach("/students/", StudentResource.class);
 		router.attach("/students/{id}", StudentIdSpecificResource.class);
@@ -111,7 +109,7 @@ public class RestApp extends Application {
 
 		router.attach("/attendance", RegisterAttendanceResource.class);
 		router.attach("/presentation", RegisterPresentationResource.class);
-		
+
 		router.attach("/login", LoginResource.class);
 
 		authenticatior.setNext(router);

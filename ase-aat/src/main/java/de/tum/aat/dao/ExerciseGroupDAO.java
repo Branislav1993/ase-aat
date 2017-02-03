@@ -50,7 +50,7 @@ public class ExerciseGroupDAO {
 		if (s == null) {
 			throw new NotFoundException(ExerciseGroup.class);
 		}
-		
+
 		if (!s.getStudents().isEmpty()) {
 			for (Student student : s.getStudents()) {
 				student.setExerciseGroup(null);

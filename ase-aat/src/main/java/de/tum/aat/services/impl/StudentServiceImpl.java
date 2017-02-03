@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import de.tum.aat.constants.Constants;
 import de.tum.aat.dao.ExerciseGroupDAO;
 import de.tum.aat.dao.StudentDAO;
 import de.tum.aat.domain.ExerciseGroup;
@@ -131,7 +132,8 @@ public class StudentServiceImpl implements StudentService {
 
 		s.getTimeslotsAttended().add(ts);
 
-		if (s.getTimeslotsAttended().size() >= 10 && s.getNumberOfPresentations() > 0) {
+		if (s.getTimeslotsAttended().size() >= Constants.REQIRED_NUM_EXERCISES
+				&& s.getNumberOfPresentations() >= Constants.REQIRED_NUM_PRESENTATIONS) {
 			s.setHasBonus(true);
 		}
 

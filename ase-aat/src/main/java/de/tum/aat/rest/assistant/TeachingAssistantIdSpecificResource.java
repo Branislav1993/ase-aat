@@ -6,7 +6,6 @@ import org.restlet.resource.ServerResource;
 
 import de.tum.aat.domain.TeachingAssistant;
 import de.tum.aat.exceptions.NoIdException;
-import de.tum.aat.exceptions.NotFoundException;
 import de.tum.aat.services.TeachingAssistantService;
 import de.tum.aat.services.impl.TeachingAssistantServiceImpl;
 
@@ -30,7 +29,7 @@ public class TeachingAssistantIdSpecificResource extends ServerResource {
 	}
 
 	@Delete
-	public void deleteTeachingAssistant() throws NotFoundException {
+	public void deleteTeachingAssistant() {
 		long id = Long.MIN_VALUE;
 		try {
 			id = Long.parseLong(getAttribute("id"));
