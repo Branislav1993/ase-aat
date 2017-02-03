@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # encoding: utf-8
-
 import os, time
 import threading
 from threading import Thread, Lock
@@ -17,7 +16,7 @@ import RPi.GPIO as GPIO
 lcd = CharLCD(pin_rs=4, pin_rw=18, pin_e=17, pins_data=[18, 22, 23, 24], numbering_mode=GPIO.BCM, cols=16, rows=2, dotsize=8, auto_linebreaks=True)
 
 logging.basicConfig()
-syncInterval = 20.0
+syncInterval = 5.0
 syncFile = 'workspace/sync.txt'
 
 queuedMessages = Set([])
@@ -145,18 +144,14 @@ def syncQRCodes():
         print repr(e)
 
 def _main():
-    
     writeTop("Initialize")
-
     offlineScheduler.add_job(syncQRCodes, 'interval', seconds=syncInterval)
     offlineScheduler.start(paused=True)
-
     # initialize the camera and grab a reference to the raw camera capture
     camera = PiCamera()
     camera.resolution = (640, 480)
     camera.framerate = 60
     camera.start_preview()
-    
     # allow the camera to warmup
     time.sleep(0.1)
     
@@ -171,7 +166,6 @@ def _main():
     scanCount = 0
 
     writeTop("Ready")
-
     for filename in camera.capture_continuous('workspace/scan_{counter}.jpg', use_video_port=True):
         Thread(target = qrAnalysis, args = (filename,)).start()
         currentTime = time.time()
