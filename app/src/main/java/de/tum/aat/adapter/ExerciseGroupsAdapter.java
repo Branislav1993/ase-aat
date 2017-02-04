@@ -93,7 +93,7 @@ public class ExerciseGroupsAdapter extends ArrayAdapter<ExerciseGroup> {
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(ctx)
-                        .setTitle("Deregister from a group")
+                        .setTitle("Register for a group")
                         .setMessage("Are you sure you want to register for exercise group" + exerciseGroup.name + "?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
